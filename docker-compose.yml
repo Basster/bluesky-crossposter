@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   crossposter:
     build: .
@@ -13,8 +12,8 @@ services:
       TWITTER_ACCESS_TOKEN:
       TWITTER_ACCESS_TOKEN_SECRET:
       # defaults to true, change to false if you don't want to enable it
-      TWITTER_CROSSPOSTING: true
-      MASTODON_CROSSPOSTING: true
+      TWITTER_CROSSPOSTING: ${TWITTER_CROSSPOSTING:-true}
+      MASTODON_CROSSPOSTING: ${MASTODON_CROSSPOSTING:-true}
       LOG_LEVEL:
       MASTODON_VISIBILITY:
       MENTIONS:
@@ -29,5 +28,9 @@ services:
       # job interval, defaults to 1 hour(the max lag between bluesky and twitter/mastodon)
       RUN_INTERVAL: 3600
     volumes:
-      - ./dbhost:/db
-      - ./backup:/backup
+      - db:/db
+      - backup:/backup
+
+volumes:
+  db: ~
+  backup: ~
